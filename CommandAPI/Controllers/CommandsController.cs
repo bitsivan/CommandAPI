@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using AutoMapper;
+using CommandAPI.Data.DTOs;
 using CommandAPI.Data.Interfaces;
 using CommandAPI.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +12,18 @@ namespace CommandAPI.Controllers
     public class CommandsController:ControllerBase
     {
         private readonly ICommandAPIRepo _repository;
-        public CommandsController(ICommandAPIRepo repository)
+        private readonly IMapper _mapper;
+        public CommandsController(ICommandAPIRepo repository, IMapper mapper)
         {
             _repository=repository;
+            _mapper=mapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Command>> GetAllCommands()
+        public ActionResult<IEnumerable<CommandReadDto>> GetAllCommands()
         {
             var result=_repository.GetAllCommands();
-            return Ok(result);
+            return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(result));
         }
 
         [HttpGet("{id}")]
@@ -29,7 +33,7 @@ namespace CommandAPI.Controllers
             if(commandItem==null)
                 return NotFound();
 
-            return Ok(commandItem);
+            return Ok(_mapper.Map<CommandReadDto>(commandItem));
         }
     }
 }

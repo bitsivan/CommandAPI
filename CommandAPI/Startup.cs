@@ -33,13 +33,14 @@ namespace CommandAPI
             var builder=new SqlConnectionStringBuilder();
             builder.ConnectionString=Configuration.GetConnectionString("connectionSQL");
             builder.DataSource=Configuration["Data Source"];
-
+            
             services.AddDbContext<CommandDBContext>(opt=>opt.UseSqlServer
                 (builder.ConnectionString));
 
             services.AddControllers();
 
             //Add Dependencies
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
 
