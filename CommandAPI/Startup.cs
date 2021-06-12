@@ -34,8 +34,8 @@ namespace CommandAPI
             services.AddControllers();
 
             //Add Dependencies
-            services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
-
+            //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
+            services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
 
             services.AddSwaggerGen(c =>
             {
