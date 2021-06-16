@@ -7,7 +7,7 @@ pool:
   vmImage: 'ubuntu-latest'
   
 variables:
-  buildConfiguration:'Release'
+  buildConfiguration: 'Release'
 
 steps:
   - task: UseDotNet@2
