@@ -28,6 +28,12 @@ namespace CommandAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(result));
         }
 
+        /// <summary>
+        /// Test desceription GetCommandId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
         [HttpGet("{id}", Name ="GetCommandById")]
         public IActionResult GetCommandById(int id)
         {
