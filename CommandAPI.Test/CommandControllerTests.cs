@@ -123,6 +123,22 @@ namespace CommandAPI.Test
             Assert.IsType<ActionResult<CommandReadDto>>(result);
         }
 
+        [Fact]
+        public void DeleteCommand_Returns_404NotFound_Test()
+        {
+            //Arrange
+            mockRepo.Setup(repo=>
+                repo.GetCommandById(0)).Returns(()=>null);
+
+            var controller=new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result=controller.DeleteCommand(0);
+            //Assert
+            Assert.IsType<NotFoundResult>(result);
+            //Assert.IsType<OkResult>(result);
+        }
+
         public List<Command> GetCommands(int num)
         {
             var commands=new List<Command>();
