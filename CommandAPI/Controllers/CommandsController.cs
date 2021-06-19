@@ -29,7 +29,7 @@ namespace CommandAPI.Controllers
         }
 
         /// <summary>
-        /// Test desceription 
+        /// Test desceription run pipeline
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
