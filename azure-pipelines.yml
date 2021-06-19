@@ -1,11 +1,7 @@
 # Pipeline CommandAPI Tests
 
 trigger:
-<<<<<<< HEAD
 - main
-=======
-- develop
->>>>>>> f30e47df4782571df0b35fab8bfe8f08ce5f1be4
 
 pool:
   vmImage: 'ubuntu-latest'
