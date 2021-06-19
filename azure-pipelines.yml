@@ -25,8 +25,8 @@ steps:
     displayName: 'dotnet publish'
     inputs:
       command: publish
-      publishWebProjects: false
-      projects: '/CommandAPI/*.csproj'
+      publishWebProjects: true
+      projects: 'apisolution/CommandAPI/*.csproj'
       arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
