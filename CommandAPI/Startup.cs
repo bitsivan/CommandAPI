@@ -8,33 +8,47 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace CommandAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration{get;}
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
+            var builder=new SqlConnectionStringBuilder();
+            builder.ConnectionString=Configuration.GetConnectionString("connectionSQL");
+            builder.DataSource=Configuration["Data Source"];
+            
+            services.AddDbContext<CommandDBContext>(opt=>opt.UseSqlServer
+                (builder.ConnectionString));
+
             services.AddControllers();
 
             //Add Dependencies
-            services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddControllers().AddNewtonsoftJson(s=>
+            {
+                s.SerializerSettings.ContractResolver=new CamelCasePropertyNamesContractResolver();
+            });
+            //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
+            services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
 
-            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommandAPI", Version = "v1" });
