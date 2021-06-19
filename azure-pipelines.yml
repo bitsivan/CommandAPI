@@ -18,5 +18,5 @@ steps:
     displayName: 'dotnet test'
     inputs:
       command: test
-      projects: '**/Tests/*.csproj'
+      projects: '**/*Test/*.csproj'
       testRunTitle: 'xUnit Test Run'
